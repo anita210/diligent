@@ -19,6 +19,13 @@ export function createApp(todoStore, args) {
       const added = add(todoStore, validated);
       display(['New Todo added:', format(added)])
       break;
+      case 'find-by-title':
+        if (params.length === 0) {
+          throw new AppError('No search term provided.');
+        }
+        const found = findByTitle(todoStore, params);
+        display(typeof found === 'string' ? [found] : formatList(found));
+        break;
     default:
       throw new AppError(`Unknown command: ${command}`)
   }
