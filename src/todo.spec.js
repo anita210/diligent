@@ -1,5 +1,5 @@
 import { jest } from '@jest/globals';
-import { add, format, formatList, list } from './todo.js';
+import { add, format, formatList, list, findByTitle } from './todo.js';
 
 function createMockStore(data) {
   return {
@@ -132,6 +132,41 @@ describe('add', () => {
     expect(current).toStrictEqual(expected);
     expect(mockStore.set.mock.calls[0][0])
       .toStrictEqual([...stored, expected]);
+  });
+});
+
+describe('findByTitle', () => {
+  it('should throw an error if the search term is less than 3 characters', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: 'Todo 1', done: false }
+    ]);
+
+    expect(() => findByTitle(mockStore, ['ab'])).toThrow('Search term must be at least 3 characters long.');
+  });
+
+  it('should return todos that match the search term (case insensitive)', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: 'Buy Milk', done: false },
+      { id: 2, title: 'Walk the dog', done: true },
+      { id: 3, title: 'Milk the cow', done: false }
+    ]);
+    const expected = [
+      '1 - [ ] Buy Milk',
+      '3 - [ ] Milk the cow'
+    ];
+
+    const current = findByTitle(mockStore, ['milk']);
+    expect(current).toStrictEqual(expected);
+  });
+
+  it('should return a message if no todos match the search term', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: 'Buy Milk', done: false },
+      { id: 2, title: 'Walk the dog', done: true }
+    ]);
+
+    const current = findByTitle(mockStore, ['pizza']);
+    expect(current).toBe('No todos found with that title.');
   });
 });
 
