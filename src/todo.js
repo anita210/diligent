@@ -31,3 +31,23 @@ export function add(store, params) {
   store.set(toStore)
   return newTodo;
 }
+
+export function findByTitle(store, params) {
+  const [searchTerm] = params;
+
+  if (searchTerm.length < 3) {
+    throw new Error('Search term must be at least 3 characters long.');
+  }
+
+  const todos = store.get();
+
+  const foundTodos = todos.filter(todo =>
+    todo.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (foundTodos.length === 0) {
+    return 'No todos found with that title.';
+  }
+
+  return foundTodos.map(format).join('\n');
+}
