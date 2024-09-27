@@ -1,5 +1,6 @@
 import { AppError } from "./app-error.js";
 import { display } from "./display.js";
+import { format } from "./todo.js";
 
 export function complete(todoStore, todoId) {
     const todos = todoStore.get()
@@ -8,10 +9,11 @@ export function complete(todoStore, todoId) {
         throw new AppError(`Todo with ID ${todoId} not found.`);
     }
     if(todo.done){
-        throw new AppError(`Todo "${todo.title}" with ID ${todoId} is already done.`);
+        throw new AppError(`Todo "${format(todo)}" is already done.`);
     }
     todo.done = true;
     todoStore.set(todos)
-    display([`Todo "${todo.title}" with ID ${todo.id} marked as complete:`]);
+    display([`Todo marked as complete:`]);
+    display([format(todo)])
     return todoStore.get();
 }
