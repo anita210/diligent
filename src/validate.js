@@ -10,3 +10,18 @@ export function validateAddParams(params) {
   }
   return params;
 }
+
+export function validateIdInput(params) {
+  const [id] = params;
+  if(isNaN(Number(id)) || id < 1){
+    throw new AppError('The ID must be a number higher than 0.')
+  }
+  return params;
+}
+
+export function validateExistenceOfTodo(todo) {
+  if(!todo){
+    throw new AppError('No item found with this id.')
+  }
+  return todo;
+}

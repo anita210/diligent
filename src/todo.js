@@ -1,5 +1,6 @@
+
 export function format(todo) {
-  return `${todo.id} - [${todo.done ? '✅': ' '}] ${todo.title}`;
+  return `${todo.id} - [${todo.done ? '✅' : ' '}] ${todo.title}`;
 }
 
 export function formatList(todos) {
@@ -16,7 +17,7 @@ function nextId(todos) {
 }
 
 export function list(store) {
-  return store.get(); 
+  return store.get();
 }
 
 export function add(store, params) {
@@ -30,4 +31,14 @@ export function add(store, params) {
   const toStore = [...todos, newTodo]
   store.set(toStore)
   return newTodo;
+}
+
+export function findById(todos, id) {
+  const todo = todos.filter((todo) => todo.id === Number(id));
+  return todo[0];
+}
+
+export function findByStatus(todos, status) {
+  const statusTodos = todos.filter((todo => todo.status === status));
+  return statusTodos;
 }
