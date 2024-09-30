@@ -3,7 +3,7 @@ import { display } from "./display.js";
 import { format } from "./todo.js";
 
 export function complete(todoStore, todoId) {
-    const todos = todoStore.get()
+    const todos = todoStore.get();
     const todo = todos.find((todo) => todo.id == todoId);
     if (!todo) {
         throw new AppError(`Todo with ID ${todoId} not found.`);
