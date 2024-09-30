@@ -5,6 +5,10 @@ import { format } from "./todo.js";
 export function complete(todoStore, todoId) {
     const todos = todoStore.get();
     const todo = todos.find((todo) => todo.id == todoId);
+    
+    if (todoId > todos.length){
+        throw new AppError(`out of bound, you have ${todos.length} todos.`);
+    }
     if (!todo) {
         throw new AppError(`Todo with ID ${todoId} not found.`);
     }
