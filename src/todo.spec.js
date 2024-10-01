@@ -1,5 +1,6 @@
 import { jest } from '@jest/globals'; 
 import { add, findById, format, formatList, list } from './todo.js';
+import { complete } from './complete.js';
 
 function createMockStore(data) {
   return {
@@ -7,6 +8,21 @@ function createMockStore(data) {
     set: jest.fn()
   }
 }
+
+describe('complete', () => {
+  it('should be done a todo', () => {
+    const todos = [
+      { title: 'todo title 1', id: 1, done: false },
+      { title: 'todo title 2', id: 2, done: false }
+    ];
+    const expected = [
+      { title: 'todo title 1', id: 1, done: true },
+      { title: 'todo title 2', id: 2, done: false }
+    ];
+    const current = complete(createMockStore(todos), 1);
+    expect(current).toStrictEqual(expected);
+  })
+})
 
 describe('format', () => {
   it('should format a not done todo', () => {

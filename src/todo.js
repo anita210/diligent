@@ -1,6 +1,6 @@
 
 export function format(todo) {
-  return `${todo.id} - [${todo.done ? '✅' : ' '}] ${todo.title}`;
+  return `${todo.id} - [${todo.done ? 'x': ' '}] ${todo.title}`;
 }
 
 export function formatList(todos) {

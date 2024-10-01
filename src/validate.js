@@ -26,6 +26,16 @@ export function validateExistenceOfTodo(todo) {
   return todo;
 }
 
+export function validateCompleteParam(param){
+  if(isNaN(Number(param))){
+    throw new AppError('The ID must be a number');
+  }
+  if(Number(param) < 1){
+    throw new AppError('The ID must be a positive number');
+  }
+  return param;
+}
+
 export function validateStatusInput(params) {
   const [status] = params
   if(params !== 'done' && params !== 'not-done'){
