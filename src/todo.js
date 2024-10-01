@@ -1,3 +1,4 @@
+
 export function format(todo) {
   return `${todo.id} - [${todo.done ? 'x': ' '}] ${todo.title}`;
 }
@@ -16,7 +17,7 @@ function nextId(todos) {
 }
 
 export function list(store) {
-  return store.get(); 
+  return store.get();
 }
 
 export function add(store, params) {
@@ -30,6 +31,18 @@ export function add(store, params) {
   const toStore = [...todos, newTodo]
   store.set(toStore)
   return newTodo;
+}
+
+export function findById(todos, id) {
+  console.log("todo.js findby: " + todos)
+  const todo = todos.filter((todo) => todo.id === Number(id));
+  console.log("todo.js findby: " + todo[0] )
+  return todo[0];
+}
+
+export function findByStatus(todos, status) {
+  const statusTodos = todos.filter((todo => todo.status === status));
+  return statusTodos;
 }
 
 export function complete(todoStore, todoId) {
@@ -46,10 +59,11 @@ export function complete(todoStore, todoId) {
   return todo;
 }
 
-export function updateTitle(todoStore, id, title){
-  const todos = todoStore.get();
+export function updateTitle(todoStore, params){
+  const [id, title] = params;
+  const todos = list(todoStore);
   const todo = findById(todos, id);
-  todo.title = new title;
+  todo.title = title;
   todoStore.set(todos);
   return todo;
 }

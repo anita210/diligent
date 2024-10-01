@@ -1,8 +1,8 @@
-import { list, formatList, format, add, updateTitle, complete } from './todo.js';
+import { list, formatList, format, add, updateTitle, complete, findById } from './todo.js';
 import { display } from './display.js';
 import { AppError } from './app-error.js';
-import { validateAddParams, validateId, validateUpdateTitleParam } from './validate.js';
-
+import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateId, validateUpdateTitleParam } from './validate.js';
+import { displaySingle } from './display.js';
 
 export function createApp(todoStore, args) {
   const [, , command, ...params] = args;
@@ -20,6 +20,13 @@ export function createApp(todoStore, args) {
       const added = add(todoStore, validated);
       display(['New Todo added:', format(added)])
       break;
+    case 'find-by-id':
+      const validId = validateIdInput(params);
+      const todosList = list(todoStore)
+      const todo = findById(todosList, validId);
+      const validTodo = validateExistenceOfTodo(todo);
+      displaySingle(format(validTodo));
+      break;
     case 'complete':
         const todoId = validateId(todoStore.get(), params)
         const completed = complete(todoStore, todoId);
@@ -28,9 +35,13 @@ export function createApp(todoStore, args) {
       break;
     case 'update-title':
         const editParams = validateUpdateTitleParam(todoStore, params);
+
+        console.log("app.js: " + editParams)
+
         const updated = updateTitle(todoStore, editParams)
         display([`Todo updated:`]);
         display([format(updated)]);
+        break;
     default:
       throw new AppError(`Unknown command: ${command}`)
   }
