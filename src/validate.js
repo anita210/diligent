@@ -24,9 +24,9 @@ export function validateId(todos, param) {
   return Number(param);
 }
 
-export function validateUpdateTitleParam(params) {
+export function validateUpdateTitleParam(todos, params) {
   const [id, title] = params;
-  validateId(id);
+  validateId(todos, id);
   if (typeof title !== 'string' || title?.length === 0) {
     throw new AppError('The title must be a non zero length string.')
   }

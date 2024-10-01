@@ -1,8 +1,7 @@
-import { list, formatList, format, add, updateTitle } from './todo.js';
+import { list, formatList, format, add, updateTitle, complete } from './todo.js';
 import { display } from './display.js';
 import { AppError } from './app-error.js';
 import { validateAddParams, validateId, validateUpdateTitleParam } from './validate.js';
-import { complete } from './complete.js';
 
 
 export function createApp(todoStore, args) {
@@ -28,7 +27,7 @@ export function createApp(todoStore, args) {
         display([format(completed)]);
       break;
     case 'update-title':
-        const editParams = validateUpdateTitleParam();
+        const editParams = validateUpdateTitleParam(todoStore, params);
         const updated = updateTitle(todoStore, editParams)
         display([`Todo updated:`]);
         display([format(updated)]);
