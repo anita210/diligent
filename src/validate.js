@@ -12,7 +12,6 @@ export function validateAddParams(params) {
 }
 
 export function validateId(todos, param) {
-  console.log(param)
   if (isNaN(Number(param))) {
     throw new AppError('The ID must be a number');
   }
