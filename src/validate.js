@@ -25,3 +25,18 @@ export function validateExistenceOfTodo(todo) {
   }
   return todo;
 }
+
+export function validateStatusInput(params) {
+  const [status] = params
+  if(params !== 'done' && params !== 'not-done'){
+    throw new AppError(`${params} is not a valid input. Use 'done' or not 'done'.`)
+  }
+  return params;
+}
+
+export function checkIfListByStatusEmpty(todos) {
+  if(!todos.length){
+    throw new AppError(`No item with this status is found.`)
+  }
+  return todos;
+}

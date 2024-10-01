@@ -28,6 +28,8 @@ export function createApp(todoStore, args) {
       const validTodo = validateExistenceOfTodo(todo);
       displaySingle(format(validTodo));
       break;
+    case 'find-by-status':
+      const 
     default:
       throw new AppError(`Unknown command: ${command}`)
   }
