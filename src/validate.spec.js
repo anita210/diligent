@@ -1,4 +1,24 @@
-import { validateAddParams, validateExistenceOfTodo, validateIdInput } from "./validate";
+import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateCompleteParam } from "./validate";
+
+describe("validateCompleteParam", ()=>{
+it("should be a number", ()=>{
+  const param = 1;
+  const expected = 1;
+  const current = validateCompleteParam(param)
+  expect(current).toStrictEqual(expected);
+})
+
+it("should be a number", ()=>{
+  const param = "string";
+  expect(()=>validateCompleteParam(param)).toThrow('The ID must be a number')
+})
+
+it("should be a positive number", ()=>{
+  const param = -1;
+  expect(()=>validateCompleteParam(param)).toThrow('The ID must be a positive number')
+})
+
+})
 
 describe('validateAddParams', () => {
   it('should pass and return with the original params with single string', () => {
