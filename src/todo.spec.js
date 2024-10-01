@@ -1,5 +1,5 @@
-import { jest } from '@jest/globals';
-import { add, format, formatList, list } from './todo.js';
+import { jest } from '@jest/globals'; 
+import { add, findById, format, formatList, list } from './todo.js';
 import { complete } from './complete.js';
 
 function createMockStore(data) {
@@ -94,6 +94,54 @@ describe('list', () => {
 
     expect(current).toStrictEqual(expected);
   })
+
+  it('should find the item in the todo list by the id with number input', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: 'Todo 1', done: false },
+      { id: 2, title: 'Todo 2', done: true }
+    ])
+
+    const listed = mockStore.get();
+
+    const expected = { id: 1, title: 'Todo 1', done: false };
+
+    const current = findById(listed, 1);
+
+    expect(current).toEqual(expected);
+
+  })
+
+  it('should find the item in the todo list by the id with string containing number characters input', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: 'Todo 1', done: false },
+      { id: 2, title: 'Todo 2', done: true }
+    ])
+
+    const listed = mockStore.get();
+
+    const expected = { id: 1, title: 'Todo 1', done: false };
+
+    const current = findById(listed, "1");
+
+    expect(current).toEqual(expected);
+
+  })
+
+  it('should return undefined if non-existent id is given', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: 'Todo 1', done: false },
+      { id: 2, title: 'Todo 2', done: true }
+    ])
+
+    const listed = mockStore.get();
+
+    const expected = undefined;
+
+    const current = findById(listed, 3);
+
+    expect(current).toEqual(expected);
+
+  })
 })
 
 describe('add', () => {
@@ -149,8 +197,4 @@ describe('add', () => {
     expect(mockStore.set.mock.calls[0][0])
       .toStrictEqual([...stored, expected]);
   });
-});
-
-
-
-
+})
