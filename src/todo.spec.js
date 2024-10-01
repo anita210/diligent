@@ -10,7 +10,7 @@ function createMockStore(data) {
 }
 
 describe('complete', () => {
-  it('should be done a todo', () => {
+  it('should be marked as done a todo', () => {
     const todos = [
       { title: 'todo title 1', id: 1, done: false },
       { title: 'todo title 2', id: 2, done: false }
@@ -19,8 +19,8 @@ describe('complete', () => {
       { title: 'todo title 1', id: 1, done: true },
       { title: 'todo title 2', id: 2, done: false }
     ];
-    const current = complete(createMockStore(todos), 1);
-    expect(current).toStrictEqual(expected);
+   complete(createMockStore(todos), 1);
+    expect(todos).toStrictEqual(expected);
   })
 })
 

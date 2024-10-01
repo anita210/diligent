@@ -17,7 +17,6 @@ export function validateCompleteParam(param){
   }
   if(Number(param) < 1){
     throw new AppError('The ID must be a positive number');
-
   }
   return param;
 }
