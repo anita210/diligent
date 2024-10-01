@@ -8,11 +8,13 @@ function createMockStore(data) {
 }
 
 describe("update title",()=>{
+  const todos = [
+    { title: 'todo title', id: 1, done: false },
+    { title: 'todo title', id: 2, done: false }
+  ];
+
   it("should update the title", ()=>{
-    const todos = [
-      { title: 'todo title 1', id: 1, done: false },
-      { title: 'todo title 2', id: 2, done: false }
-    ];
+
     const expected =  [
       { title: 'updated', id: 1, done: false },
       { title: 'todo title', id: 2, done: false }
@@ -20,6 +22,7 @@ describe("update title",()=>{
     const current = updateTitle(createMockStore(todos), 1, "updated");
     expect(todos).toStrictEqual(expected);
   })
+
 })
 
 describe('complete', () => {
