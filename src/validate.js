@@ -18,10 +18,10 @@ export function validateId(todos, param) {
   if (Number(param) < 1) {
     throw new AppError('The ID must be a positive number');
   }
-  if (todoId > todos.length) {
-    throw new AppError(`out of bound, you have ${todos.length} todos.`);
+  if (Number(param) > todos.length) {
+    throw new AppError(`Out of bound, you have ${todos.length} todos.`);
   }
-  return param;
+  return Number(param);
 }
 
 export function validateUpdateTitleParam(params) {

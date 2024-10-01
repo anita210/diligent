@@ -1,7 +1,7 @@
 import { list, formatList, format, add, updateTitle } from './todo.js';
 import { display } from './display.js';
 import { AppError } from './app-error.js';
-import { validateAddParams, validateCompleteParam, validateUpdateTitleParam } from './validate.js';
+import { validateAddParams, validateId, validateUpdateTitleParam } from './validate.js';
 import { complete } from './complete.js';
 
 
@@ -22,7 +22,7 @@ export function createApp(todoStore, args) {
       display(['New Todo added:', format(added)])
       break;
     case 'complete':
-        const todoId = validateCompleteParam(params[0])
+        const todoId = validateId(todoStore.get(), params)
         const completed = complete(todoStore, todoId);
         display([`Todo marked as complete:`]);
         display([format(completed)]);
