@@ -35,9 +35,6 @@ export function createApp(todoStore, args) {
       break;
     case 'update-title':
         const editParams = validateUpdateTitleParam(todoStore, params);
-
-        console.log("app.js: " + editParams)
-
         const updated = updateTitle(todoStore, editParams)
         display([`Todo updated:`]);
         display([format(updated)]);

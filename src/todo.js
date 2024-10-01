@@ -34,9 +34,7 @@ export function add(store, params) {
 }
 
 export function findById(todos, id) {
-  console.log("todo.js findby: " + todos)
   const todo = todos.filter((todo) => todo.id === Number(id));
-  console.log("todo.js findby: " + todo[0] )
   return todo[0];
 }
 
