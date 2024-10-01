@@ -1,7 +1,5 @@
 import { jest } from '@jest/globals'; 
-import { add, findById, format, formatList, list } from './todo.js';
-import { complete } from './complete.js';
-
+import { add, findById, format, formatList, list, complete, updateTitle } from './todo.js';
 function createMockStore(data) {
   return {
     get: jest.fn(() => data),
@@ -9,8 +7,26 @@ function createMockStore(data) {
   }
 }
 
+describe("update title",()=>{
+  const todos = [
+    { title: 'todo title', id: 1, done: false },
+    { title: 'todo title', id: 2, done: false }
+  ];
+
+  it("should update the title", ()=>{
+
+    const expected =  [
+      { title: 'updated', id: 1, done: false },
+      { title: 'todo title', id: 2, done: false }
+    ];
+    const current = updateTitle(createMockStore(todos), [1, "updated"]);
+    expect(todos).toStrictEqual(expected);
+  })
+
+})
+
 describe('complete', () => {
-  it('should be done a todo', () => {
+  it('should be marked as done a todo', () => {
     const todos = [
       { title: 'todo title 1', id: 1, done: false },
       { title: 'todo title 2', id: 2, done: false }
@@ -19,8 +35,8 @@ describe('complete', () => {
       { title: 'todo title 1', id: 1, done: true },
       { title: 'todo title 2', id: 2, done: false }
     ];
-    const current = complete(createMockStore(todos), 1);
-    expect(current).toStrictEqual(expected);
+   complete(createMockStore(todos), 1);
+    expect(todos).toStrictEqual(expected);
   })
 })
 
