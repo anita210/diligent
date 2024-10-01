@@ -9,7 +9,9 @@
 Answer the following questions:
 
 - In which file we can found the entrypoint of the application?
+    index.js
 - What is this `process.argv`?
+    
 - What are the main responsibilities of the `createApp` in the `app.js`?
 - What kind of functions can be found in `todo.js`?
 - How a new ID is generated to the todo if it is added?
