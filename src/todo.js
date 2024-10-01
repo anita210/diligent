@@ -53,3 +53,11 @@ export function updateTitle(todoStore, id, title){
   todoStore.set(todos);
   return todo;
 }
+
+export function deleteTodo(todoStore, id){
+  const todos = todoStore.get();
+  let todo = findById(todos, id);
+  todos.slice(indexOf(todo), 1);
+  todoStore.set(todos);
+  return todo;
+}

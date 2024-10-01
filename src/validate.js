@@ -12,6 +12,7 @@ export function validateAddParams(params) {
 }
 
 export function validateId(todos, param) {
+  console.log(param)
   if (isNaN(Number(param))) {
     throw new AppError('The ID must be a number');
   }
@@ -24,9 +25,10 @@ export function validateId(todos, param) {
   return Number(param);
 }
 
-export function validateUpdateTitleParam(params) {
+export function validateUpdateTitleParam(todoStore, params) {
   const [id, title] = params;
-  validateId(id);
+  validateId(todoStore, Number(id));
+
   if (typeof title !== 'string' || title?.length === 0) {
     throw new AppError('The title must be a non zero length string.')
   }
