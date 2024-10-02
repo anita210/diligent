@@ -1,4 +1,3 @@
-
 export function format(todo) {
    const labels = todo.labels && todo.labels.length > 0 ? todo.labels.join(', ') : '';
   
@@ -45,6 +44,7 @@ export function findByStatus(todos, status) {
   return statusTodos;
 }
 
+ Show-labels
 export function addLabel(store, id, label) {
   const todos = store.get();
   const todo = findById(todos, id);
@@ -59,6 +59,12 @@ export function addLabel(store, id, label) {
 
   store.set(todos);
   return todo;
+}
+
+export function findByTitle(todos, title) {
+  const titleTodos = todos.filter((todo) => todo.title.toLowerCase() === title.toLowerCase());
+  return titleTodos;
+ main
 }
 
 export function deleteLabel(store, id, label) {
