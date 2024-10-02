@@ -1,4 +1,3 @@
-
 export function format(todo) {
   return `${todo.id} - [${todo.done ? 'x': ' '}] ${todo.title}`;
 }
@@ -41,4 +40,9 @@ export function findById(todos, id) {
 export function findByStatus(todos, status) {
   const statusTodos = todos.filter((todo => todo.status === status));
   return statusTodos;
+}
+
+export function findByTitle(todos, title) {
+  const titleTodos = todos.filter((todo) => todo.title.toLowerCase() === title.toLowerCase());
+  return titleTodos;
 }
