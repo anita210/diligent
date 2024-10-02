@@ -36,6 +36,7 @@ export function validateCompleteParam(param){
   return param;
 }
 
+ Show-labels
 export function validateLabelParams(params) {
   if (params.length !== 2) {
     throw new AppError('You must provide a todo ID and a label.');
@@ -47,3 +48,15 @@ export function validateLabelParams(params) {
   }
   return [id, label];
 }
+
+export function validateTitleInput(params) {
+  if (params.length !== 1) {
+    throw new AppError('Please provide exactly one title.');
+  }
+  const [title] = params;
+  if (typeof title !== 'string' || title.length === 0) {
+    throw new AppError('The title must be a non-zero length string.');
+  }
+  return title;
+}
+ main
