@@ -35,3 +35,14 @@ export function validateCompleteParam(param){
   }
   return param;
 }
+
+export function validateTitleInput(params) {
+  if (params.length !== 1) {
+    throw new AppError('Please provide exactly one title.');
+  }
+  const [title] = params;
+  if (typeof title !== 'string' || title.length === 0) {
+    throw new AppError('The title must be a non-zero length string.');
+  }
+  return title;
+}
