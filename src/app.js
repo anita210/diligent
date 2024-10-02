@@ -38,6 +38,11 @@ export function createApp(todoStore, args) {
         const updatedTodo = addLabel(todoStore, todoIdLabel, label);
         display(['Label added to Todo:', format(updatedTodo)]);
         break;
+    case 'delete-label':
+        const [todoIdToDeleteLabel, labelToDelete] = validateDeleteLabelParams(params);
+        const todoWithDeletedLabel = deleteLabel(todoStore, [todoIdToDeleteLabel, labelToDelete]);
+        display(['Label deleted from Todo:', format(todoWithDeletedLabel)]);
+        break;
     default:
       throw new AppError(`Unknown command: ${command}`)
   }
