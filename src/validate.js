@@ -76,3 +76,18 @@ export function validateDeleteLabelParams(params) {
   return [id, label]; 
 }
 
+export function validateFindByLabelParams(params) {
+  if (params.length !== 1) {
+    throw new AppError('You must provide exactly one label.');
+  }
+  
+  const [label] = params;
+  
+  if (typeof label !== 'string' || label.length === 0) {
+    throw new AppError('The label must be a non-empty string.');
+  }
+  
+  return label; 
+}
+
+
