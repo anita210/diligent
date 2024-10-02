@@ -198,3 +198,79 @@ describe('add', () => {
       .toStrictEqual([...stored, expected]);
   });
 })
+
+describe('addLabel', () => {
+  it('should add a label to a todo', () => {
+    const todos = [{ id: 1, title: 'Todo 1', done: false, labels: [] }];
+    const mockStore = createMockStore(todos);
+    
+    const expected = [
+      { id: 1, title: 'Todo 1', done: false, labels: ['urgent'] }
+    ];
+
+    addLabel(mockStore, [1, 'urgent']);
+    
+    expect(mockStore.set.mock.calls[0][0]).toStrictEqual(expected);
+  });
+
+  it('should not add duplicate labels', () => {
+    const todos = [{ id: 1, title: 'Todo 1', done: false, labels: ['urgent'] }];
+    const mockStore = createMockStore(todos);
+
+    const expected = [
+      { id: 1, title: 'Todo 1', done: false, labels: ['urgent'] }
+    ];
+
+    addLabel(mockStore, [1, 'urgent']);
+    
+    expect(mockStore.set.mock.calls[0][0]).toStrictEqual(expected);
+  });
+
+  it('should throw an error if the todo is not found', () => {
+    const todos = [{ id: 1, title: 'Todo 1', done: false, labels: [] }];
+    const mockStore = createMockStore(todos);
+
+    expect(() => addLabel(mockStore, [2, 'urgent'])).toThrow('No item found with this id.');
+  });
+});
+
+describe('add with labels', () => {
+  it('should add a new todo with an empty labels array', () => {
+    const params = ['New Todo'];
+    const mockStore = createMockStore([]);
+    const expected = {
+      id: 1,
+      done: false,
+      title: 'New Todo',
+      labels: [] 
+    }
+
+    const current = add(mockStore, params);
+
+    expect(current).toStrictEqual(expected);
+    expect(mockStore.set.mock.calls[0][0])
+      .toStrictEqual([expected]);
+  });
+});
+
+describe('format with labels', () => {
+  it('should format a todo with labels', () => {
+    const todo = { title: 'Clean the house', id: 1, done: false, labels: ['household', 'cleaning'] };
+    const expected = '1 - [ ] (household, cleaning) Clean the house';
+
+    const current = format(todo);
+
+    expect(current).toStrictEqual(expected);
+  });
+
+  it('should format a todo without labels', () => {
+    const todo = { title: 'Buy milk', id: 1, done: false, labels: [] };
+    const expected = '1 - [ ] () Buy milk';
+
+    const current = format(todo);
+
+    expect(current).toStrictEqual(expected);
+  });
+});
+
+
