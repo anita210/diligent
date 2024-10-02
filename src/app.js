@@ -1,9 +1,7 @@
-import { list, formatList, format, add } from './todo.js';
-import { display } from './display.js';
+import { list, formatList, format, add, findById, findByTitle } from './todo.js';
+import { display, displaySingle } from './display.js';
 import { AppError } from './app-error.js';
-import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateCompleteParam } from './validate.js';
-import { findById } from './todo.js';
-import { displaySingle } from './display.js';
+import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateCompleteParam, validateTitleInput } from './validate.js'; 
 import { complete } from './complete.js';
 
 export function createApp(todoStore, args) {
@@ -29,11 +27,21 @@ export function createApp(todoStore, args) {
       const validTodo = validateExistenceOfTodo(todo);
       displaySingle(format(validTodo));
       break;
+    case 'find-by-title':  
+      const title = validateTitleInput(params);  
+      const allTodos = list(todoStore);
+      const matchingTodos = findByTitle(allTodos, title);
+      if (matchingTodos.length === 0) {
+        display([`No todos found with title: ${title}`]);
+      } else {
+        display(formatList(matchingTodos));
+      }
+      break;
     case 'complete':
-        const todoId = validateCompleteParam(params[0])
-        const completed = complete(todoStore, todoId);
+      const todoId = validateCompleteParam(params[0]);
+      const completed = complete(todoStore, todoId);
       break;
     default:
-      throw new AppError(`Unknown command: ${command}`)
+      throw new AppError(`Unknown command: ${command}`);
   }
 }
