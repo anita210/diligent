@@ -1,10 +1,12 @@
 
 export function format(todo) {
-  return `${todo.id} - [${todo.done ? 'x': ' '}] ${todo.title}`;
+   const labels = todo.labels && todo.labels.length > 0 ? todo.labels.join(', ') : '';
+  
+  return `${todo.id} - [${todo.done ? 'x': ' '}] (${labels}) ${todo.title}`;
 }
 
 export function formatList(todos) {
-  return todos.map(format)
+  return todos.map(format);
 }
 
 function nextId(todos) {
