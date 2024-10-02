@@ -253,4 +253,24 @@ describe('add with labels', () => {
   });
 });
 
+describe('format with labels', () => {
+  it('should format a todo with labels', () => {
+    const todo = { title: 'Clean the house', id: 1, done: false, labels: ['household', 'cleaning'] };
+    const expected = '1 - [ ] (household, cleaning) Clean the house';
+
+    const current = format(todo);
+
+    expect(current).toStrictEqual(expected);
+  });
+
+  it('should format a todo without labels', () => {
+    const todo = { title: 'Buy milk', id: 1, done: false, labels: [] };
+    const expected = '1 - [ ] () Buy milk';
+
+    const current = format(todo);
+
+    expect(current).toStrictEqual(expected);
+  });
+});
+
 
