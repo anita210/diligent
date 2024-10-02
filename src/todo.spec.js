@@ -234,3 +234,23 @@ describe('addLabel', () => {
   });
 });
 
+describe('add with labels', () => {
+  it('should add a new todo with an empty labels array', () => {
+    const params = ['New Todo'];
+    const mockStore = createMockStore([]);
+    const expected = {
+      id: 1,
+      done: false,
+      title: 'New Todo',
+      labels: [] 
+    }
+
+    const current = add(mockStore, params);
+
+    expect(current).toStrictEqual(expected);
+    expect(mockStore.set.mock.calls[0][0])
+      .toStrictEqual([expected]);
+  });
+});
+
+
