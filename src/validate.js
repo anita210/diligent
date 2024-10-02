@@ -35,3 +35,15 @@ export function validateCompleteParam(param){
   }
   return param;
 }
+
+export function validateLabelParams(params) {
+  if (params.length !== 2) {
+    throw new AppError('You must provide a todo ID and a label.');
+  }
+  const [id, label] = params;
+  validateIdInput([id]);
+  if (typeof label !== 'string' || label.length < 1) {
+    throw new AppError('The label must be a non-empty string.');
+  }
+  return [id, label];
+}

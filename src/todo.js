@@ -42,3 +42,19 @@ export function findByStatus(todos, status) {
   const statusTodos = todos.filter((todo => todo.status === status));
   return statusTodos;
 }
+
+export function addLabel(store, id, label) {
+  const todos = store.get();
+  const todo = findById(todos, id);
+
+  if (!todo.labels) {
+    todo.labels = [];
+  }
+
+  if (!todo.labels.includes(label)) {
+    todo.labels.push(label);
+  }
+
+  store.set(todos);
+  return todo;
+}
