@@ -60,3 +60,30 @@ export function addLabel(store, id, label) {
   store.set(todos);
   return todo;
 }
+
+export function deleteLabel(store, id, label) {
+  const todos = store.get();
+  const todo = findById(todos, id);
+
+  if (!todo) {
+    console.error("Error: Todo not found.");
+    return;
+  }
+
+  if (!todo.labels) {
+    console.log(`Label "${label}" not found in todo with ID ${id}.`);
+    return;
+  }
+
+  const labelIndex = todo.labels.indexOf(label);
+  
+  if (labelIndex > -1) {
+    todo.labels.splice(labelIndex, 1);
+    console.log(`Label "${label}" removed from todo with ID ${id}.`);
+  } else {
+    console.log(`Label "${label}" not found in todo with ID ${id}.`);
+  }
+  store.set(todos);
+  return todo;
+}
+
