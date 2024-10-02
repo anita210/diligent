@@ -33,6 +33,11 @@ export function createApp(todoStore, args) {
         const todoId = validateCompleteParam(params[0])
         const completed = complete(todoStore, todoId);
       break;
+      case 'add-label':
+        const [todoIdLabel, label] = validateLabelParams(params);
+        const updatedTodo = addLabel(todoStore, todoIdLabel, label);
+        display(['Label added to Todo:', format(updatedTodo)]);
+        break;
     default:
       throw new AppError(`Unknown command: ${command}`)
   }
