@@ -93,3 +93,7 @@ export function deleteLabel(store, id, label) {
   return todo;
 }
 
+export function findByLabel(todos, label) {
+  return todos.filter(todo => todo.labels && todo.labels.includes(label));
+}
+
