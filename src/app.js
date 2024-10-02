@@ -1,7 +1,7 @@
-import { list, formatList, format, add } from './todo.js';
+import { list, formatList, format, add, findByStatus } from './todo.js';
 import { display } from './display.js';
 import { AppError } from './app-error.js';
-import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateCompleteParam } from './validate.js';
+import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateCompleteParam, validateStatusInput, checkIfListByStatusEmpty } from './validate.js';
 import { findById } from './todo.js';
 import { displaySingle } from './display.js';
 import { complete } from './complete.js';
@@ -34,7 +34,15 @@ export function createApp(todoStore, args) {
         const completed = complete(todoStore, todoId);
       break;
     case 'find-by-status':
-      const 
+       const validStatus = validateStatusInput(params);
+       const allTodos = list(todoStore);
+       const statusTodos = findByStatus(allTodos, validStatus);
+       const statusList = checkIfListByStatusEmpty(statusTodos);
+       display([
+        ...formatList(statusList), 
+        `You have ${statusList.length} ${validStatus} todos.`
+      ]);
+       break;
     default:
       throw new AppError(`Unknown command: ${command}`)
   }

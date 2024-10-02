@@ -13,7 +13,7 @@ export function validateAddParams(params) {
 
 export function validateIdInput(params) {
   const [id] = params;
-  if(isNaN(Number(id)) || id < 1){
+  if(isNaN(Number(id)) || Number(id) < 1){
     throw new AppError('The ID must be a number higher than 0.')
   }
   return params;
@@ -37,8 +37,8 @@ export function validateCompleteParam(param){
 }
 
 export function validateStatusInput(params) {
-  const [status] = params
-  if(params !== 'done' && params !== 'not-done'){
+  const status = params[0]
+  if(status !== 'done' && status !== 'not-done'){
     throw new AppError(`${params} is not a valid input. Use 'done' or not 'done'.`)
   }
   return params;

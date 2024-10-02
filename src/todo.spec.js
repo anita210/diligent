@@ -1,5 +1,5 @@
-import { jest } from '@jest/globals'; 
-import { add, findById, format, formatList, list } from './todo.js';
+import { jest } from '@jest/globals';
+import { add, findById, findByStatus, format, formatList, list } from './todo.js';
 import { complete } from './complete.js';
 
 function createMockStore(data) {
@@ -94,6 +94,8 @@ describe('list', () => {
 
     expect(current).toStrictEqual(expected);
   })
+})
+describe('findById', () => {
 
   it('should find the item in the todo list by the id with number input', () => {
     const mockStore = createMockStore([
@@ -197,4 +199,50 @@ describe('add', () => {
     expect(mockStore.set.mock.calls[0][0])
       .toStrictEqual([...stored, expected]);
   });
+})
+describe('findByStatus', () =>{
+  it('should return the items in the list marked done, if the params are "done"', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: 'Todo 1', done: false },
+      { id: 2, title: 'Todo 2', done: true }
+    ])
+    const listed = mockStore.get();
+    const status = ['done'];
+    const expected = [{ id: 2, title: 'Todo 2', done: true }];
+  
+
+    const current = findByStatus(listed, status);
+
+    expect(current).toStrictEqual(expected);
+  })
+
+  it('should return the items in the list marked not-done, if the params are "not-done"', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: 'Todo 1', done: false },
+      { id: 2, title: 'Todo 2', done: true }
+    ])
+    const listed = mockStore.get();
+    const status = ['not-done'];
+    const expected = [{ id: 1, title: 'Todo 1', done: false }];
+  
+
+    const current = findByStatus(listed, status);
+
+    expect(current).toStrictEqual(expected);
+  })
+
+  it('should return an empty array, if there is no item found with status', () => {
+    const mockStore = createMockStore([
+      { id: 1, title: 'Todo 1', done: true },
+      { id: 2, title: 'Todo 2', done: true }
+    ])
+    const listed = mockStore.get();
+    const status = ['not-done'];
+    const expected = [];
+  
+
+    const current = findByStatus(listed, status);
+
+    expect(current).toStrictEqual(expected);
+  })
 })

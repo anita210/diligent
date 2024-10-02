@@ -39,6 +39,7 @@ export function findById(todos, id) {
 }
 
 export function findByStatus(todos, status) {
-  const statusTodos = todos.filter((todo => todo.status === status));
+  const paramStatus = status[0] === 'done' ? true : (status[0] === 'not-done' ? false : status[0]);
+  const statusTodos = todos.filter((todo) => todo.done === paramStatus );
   return statusTodos;
 }
