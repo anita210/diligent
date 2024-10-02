@@ -68,9 +68,9 @@ export function updateTitle(todoStore, params){
 }
 
 export function deleteTodo(todoStore, id){
-  const todos = todoStore.get();
+  let todos = todoStore.get();
   let todo = findById(todos, id);
-  todos.slice(indexOf(todo), 1);
+  todos.splice(todos.indexOf(todo), 1);
   todoStore.set(todos);
   return todo;
 }

@@ -40,7 +40,7 @@ export function createApp(todoStore, args) {
         break;
         case 'delete':
       const deleteParams = validateId(todoStore.get(), params)
-      const deleted = deleteTodo(todoStore, id)
+      const deleted = deleteTodo(todoStore, params)
       display([`Todo deleted: ${format(deleted)}`]);
       break;
     default:
