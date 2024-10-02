@@ -1,10 +1,8 @@
-import { list, formatList, format, add } from './todo.js';
+import { list, formatList, format, add, updateTitle, complete, findById, deleteTodo } from './todo.js';
 import { display } from './display.js';
 import { AppError } from './app-error.js';
-import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateCompleteParam } from './validate.js';
-import { findById } from './todo.js';
+import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateId, validateUpdateTitleParam } from './validate.js';
 import { displaySingle } from './display.js';
-import { complete } from './complete.js';
 
 export function createApp(todoStore, args) {
   const [, , command, ...params] = args;
@@ -30,8 +28,20 @@ export function createApp(todoStore, args) {
       displaySingle(format(validTodo));
       break;
     case 'complete':
-        const todoId = validateCompleteParam(params[0])
+        const todoId = validateId(todoStore.get(), params)
         const completed = complete(todoStore, todoId);
+        display([`Todo marked as complete: ${format(completed)}`]);
+      break;
+    case 'update-title':
+        const editParams = validateUpdateTitleParam(todoStore, params);
+        const updated = updateTitle(todoStore, editParams)
+        display([`Todo updated:`]);
+        display([format(updated)]);
+        break;
+        case 'delete':
+      const deleteParams = validateId(todoStore.get(), params)
+      const deleted = deleteTodo(todoStore, params)
+      display([`Todo deleted: ${format(deleted)}`]);
       break;
     default:
       throw new AppError(`Unknown command: ${command}`)

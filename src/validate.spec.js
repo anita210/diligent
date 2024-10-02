@@ -1,21 +1,28 @@
-import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateCompleteParam } from "./validate";
+import { validateAddParams, validateExistenceOfTodo, validateIdInput, validateId } from "./validate";
 
-describe("validateCompleteParam", ()=>{
+describe("validateId", ()=>{
+const todos = ["test", "test", "test"];
+
 it("should be a number", ()=>{
   const param = 1;
   const expected = 1;
-  const current = validateCompleteParam(param)
+  const current = validateId(todos, param)
   expect(current).toStrictEqual(expected);
 })
 
 it("should be a number", ()=>{
   const param = "string";
-  expect(()=>validateCompleteParam(param)).toThrow('The ID must be a number')
+  expect(()=>validateId(todos, param)).toThrow('The ID must be a number')
 })
 
 it("should be a positive number", ()=>{
   const param = -1;
-  expect(()=>validateCompleteParam(param)).toThrow('The ID must be a positive number')
+  expect(()=>validateId(todos, param)).toThrow('The ID must be a positive number')
+})
+it("should be in boundary", ()=>{
+  const param = 4;
+  expect(()=>validateId(todos, param)).toThrow(`Out of bound, you have ${todos.length} todos.`)
+
 })
 
 })
